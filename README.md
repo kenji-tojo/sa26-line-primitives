@@ -10,11 +10,15 @@ Project page for the SIGGRAPH Asia 2026 (ACM TOG) paper.
 
 Enable GitHub Pages: *Settings -> Pages -> Source: Deploy from a branch -> `main` / `(root)`.
 
-The page is a single dependency-free `index.html` — no jQuery, no webfonts, no build step;
-all CSS is inline in `<style>`. Only `images/teaser.jpg` is loaded locally.
+`index.html` holds all the page's own CSS inline in `<style>` — no jQuery, no build step.
+The only external stylesheet is a self-hosted copy of Font Awesome 5 Free
+(`assets/css/fontawesome-all.min.css` + `assets/webfonts/`), used for the Resources icons,
+taken from `kenji-tojo.github.io`. Nothing is loaded from a CDN.
 
 ## Notes
 
 - The paper and supplemental PDFs are served from the `paper` release, not from the repo tree
   (`uploads/*.pdf` is gitignored).
 - `images/teaser.jpg` is 724 KB / 3106x650; consider downscaling for faster loads.
+- `assets/webfonts/` ships all formats (~2.8 MB). Browsers only ever fetch the `.woff2`,
+  so the `.eot`/`.svg`/`.ttf` files can be deleted if you want a leaner repo.
