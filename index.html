@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inverse Rendering for Modeling with Line Primitives</title>
+<meta name="description" content="SIGGRAPH Asia 2026 / ACM Transactions on Graphics. An inverse rendering method that reconstructs fuzzy geometry as explicit line primitives.">
+<meta name="keywords" content="differentiable rendering, differentiable rasterization, radiance fields, real-time rendering, line primitives">
+<meta property="og:title" content="Inverse Rendering for Modeling with Line Primitives">
+<meta property="og:description" content="SIGGRAPH Asia 2026 / ACM Transactions on Graphics">
+<meta property="og:url" content="https://kenji-tojo.github.io/sa26-line-primitives/">
+<meta property="og:image" content="https://kenji-tojo.github.io/sa26-line-primitives/images/teaser.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+body {
+	max-width: 45em;
+	margin: 3em auto;
+	padding: 0 2em;
+	color: #888;
+	background: #fff;
+	font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12pt;
+	line-height: 1.75em;
+}
+h1, h3 { color: #777; font-weight: 600; }
+h1 { font-size: 1.6em; line-height: 1.4em; margin: 0 0 0.75em; }
+h3 { font-size: 1.2em; margin: 1.75em 0 0.5em; }
+a { color: inherit; text-decoration: none; border-bottom: solid 1px #e4e4e4; transition: color 0.2s, border-color 0.2s; }
+a:hover { color: #4acaa8; border-bottom-color: transparent; }
+header { text-align: center; margin-bottom: 1.75em; }
+header p { margin: 0.5em 0; text-align: center; }
+figure { margin: 0; }
+img { width: 100%; display: block; }
+p { text-align: justify; margin: 0 0 0.75em; }
+figcaption { font-style: italic; text-align: justify; margin-top: 0.6em; }
+.video { aspect-ratio: 16/9; }
+.video iframe { width: 100%; height: 100%; border: 0; }
+pre { background: #f7f7f7; padding: 1em 1.25em; overflow-x: auto; font-size: 0.75em; line-height: 1.6; }
+footer { margin-top: 2.5em; font-size: 0.85em; text-align: center; }
+@media screen and (max-width: 640px) {
+	body { margin: 2em auto; padding: 0 1.25em; }
+	p, figcaption { text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<header>
+	<h1>Inverse Rendering for Modeling with Line Primitives</h1>
+	<p>
+		<a href="https://kenji-tojo.github.io/">Kenji Tojo</a> &nbsp;&nbsp;
+		<a href="https://faculty.runi.ac.il/arik/site/index.html">Ariel Shamir</a> &nbsp;&nbsp;
+		<a href="https://cgenglab.github.io/en/authors/admin/">Nobuyuki Umetani</a> &nbsp;&nbsp;
+		<a href="https://berndbickel.com/about-me">Bernd Bickel</a>
+	</p>
+	<p><i>SIGGRAPH Asia 2026 / ACM Transactions on Graphics</i></p>
+</header>
+
+<figure>
+	<img src="images/teaser.jpg" alt="Left: input multi-view photographs of a kiwi fruit and a hairy cactus. Right: the same objects reconstructed as collections of colored line primitives, with close-ups of the recovered fibers and the final renderings.">
+	<figcaption>
+		(a) Given a set of input images, (b) our method faithfully reconstructs highly detailed fuzzy geometry
+		composed of many thin fibers as a collection of explicit line primitives. Both training and rendering
+		remain directly compatible with efficient rasterization pipelines.
+	</figcaption>
+</figure>
+
+<h3>Resources</h3>
+<p>
+	<a href="https://github.com/kenji-tojo/sa26-line-primitives/releases/download/paper/sa26_lines_paper.pdf">Paper</a>
+	&nbsp;/&nbsp;
+	<a href="https://github.com/kenji-tojo/inverse-line-primitives">Code</a>
+	&nbsp;/&nbsp;
+	<a href="https://huggingface.co/datasets/kenji-tojo/fuzzy_dataset">Dataset</a>
+	&nbsp;/&nbsp;
+	<a href="https://github.com/kenji-tojo/sa26-line-primitives/releases/download/paper/sa26_lines_supplemental.pdf">Supplemental</a>
+	&nbsp;/&nbsp;
+	<a href="https://drive.google.com/drive/folders/1CynKmgrCU2CPXhFUDdn2Wt9J53oLUXi1?usp=sharing">Images</a>
+	&nbsp;/&nbsp;
+	<a href="https://drive.google.com/file/d/1HfwDibwELGGBxrxSxNYgflggolW6XaoH/view?usp=sharing">Video (MP4)</a>
+</p>
+
+<h3>Abstract</h3>
+<p>
+	Faithfully capturing diverse real-world objects with fuzzy, anisotropic structures&mdash;such as hair, fur,
+	fibers, and textiles&mdash;for efficient real-time visualization remains challenging. Recent radiance field
+	reconstruction methods capture these structures from multi-view images using translucent volumetric primitives
+	such as 3D Gaussians rather than opaque low-dimensional primitives (e.g., triangles, line segments, and
+	polylines), thereby limiting compatibility with standard depth-tested rasterization, reflection modeling, and
+	physical simulation. We present an inverse rendering method for reconstructing fuzzy geometry using explicit
+	line segments, which are rasterized on a subpixel grid for anti-aliasing to reproduce a semi-transparent
+	appearance. While straightforward to render, optimizing numerous line primitives to match target images poses
+	a significant challenge. We address this by introducing a stochastic differentiable rasterizer for line
+	segments that produces informative gradients with respect to vertex positions, attributes, and discrete
+	connectivity.
+</p>
+
+<h3>Video</h3>
+<div class="video">
+	<iframe src="https://www.youtube.com/embed/BTQmIC_yEkU?si=-wJ7t6WTlTxdgf3U" title="Inverse Rendering for Modeling with Line Primitives" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
+<h3>Citation</h3>
+<pre><code>@article{tojo2026lines,
+    author = {Tojo, Kenji and Shamir, Ariel and Umetani, Nobuyuki and Bickel, Bernd},
+    title = {Inverse Rendering for Modeling with Line Primitives},
+    year = {2026},
+    issue_date = {December 2026},
+    publisher = {Association for Computing Machinery},
+    volume = {45},
+    number = {6},
+    url = {https://doi.org/10.1145/3842527},
+    doi = {10.1145/3842527},
+    journal = {ACM Trans. Graph.},
+    month = dec,
+    articleno = {200},
+    numpages = {13}
+}</code></pre>
+
+<h3>Acknowledgments</h3>
+<p>
+	We thank the anonymous reviewers for their valuable feedback. This work was partly conducted while the first
+	author was at the University of Tokyo, where he was supported by JSPS KAKENHI Grant Number 23KJ0699.
+</p>
+
+<footer>
+	<a href="https://kenji-tojo.github.io/">Kenji Tojo</a>
+</footer>
+
+</body>
+</html>

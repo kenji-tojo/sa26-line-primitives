@@ -1,1 +1,3 @@
 uploads/*.pdf
+.DS_Store
+.vscode/
