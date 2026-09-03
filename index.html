@@ -35,7 +35,6 @@ header sup { font-size: 0.6em; vertical-align: super; line-height: 0; margin-lef
 .affiliations { font-size: 0.85em; }
 .affiliations sup { font-size: 0.7em; vertical-align: super; line-height: 0; margin-right: 0.15em; }
 figure { margin: 0; }
-figure.spaced { margin-bottom: 0.9em; }
 img { width: 100%; display: block; }
 p { text-align: justify; margin: 0 0 0.75em; }
 figcaption { font-style: italic; text-align: justify; margin-top: 0.6em; }
@@ -117,9 +116,6 @@ footer { margin-top: 2.5em; font-size: 0.85em; text-align: center; }
 </div>
 
 <h3>Technical Overview</h3>
-<figure class="spaced">
-	<img src="images/sa26_lines_overview.png" alt="Top: stochastic opacity masking from DiffSoup, where uniform random thresholds select a single visible fragment along each camera ray, together with the resulting score-function gradient estimator. Bottom left: our forward pass, which rasterizes line segments with Bresenham's algorithm on a 2x subpixel grid and applies image-space filtering to obtain the pixel color. Bottom right: our opacity gradient under MSAA, where the intractable joint probability over all fragments in the filter support is factorized under an independence assumption and evaluated at the pixel with the largest filter weight.">
-</figure>
 <p>
 	We build on <em>stochastic opacity masking</em>, introduced in our previous work
 	<a href="https://kenji-tojo.github.io/publications/diffsoup/">DiffSoup</a>, which enables
@@ -128,6 +124,9 @@ footer { margin-top: 2.5em; font-size: 0.85em; text-align: center; }
 	semi-transparent appearance. We address the key challenge of extending stochastic opacity masking to multi-sample
 	anti-aliasing (MSAA), where each pixel involves multiple fragment colors rather than a single one.
 </p>
+<figure>
+	<img src="images/sa26_lines_overview.png" alt="Top: stochastic opacity masking from DiffSoup, where uniform random thresholds select a single visible fragment along each camera ray, together with the resulting score-function gradient estimator. Bottom left: our forward pass, which rasterizes line segments with Bresenham's algorithm on a 2x subpixel grid and applies image-space filtering to obtain the pixel color. Bottom right: our opacity gradient under MSAA, where the intractable joint probability over all fragments in the filter support is factorized under an independence assumption and evaluated at the pixel with the largest filter weight.">
+</figure>
 
 <h3>Citation</h3>
 <pre><code>@article{tojo2026lines,
