@@ -125,7 +125,7 @@ footer { margin-top: 2.5em; font-size: 0.85em; text-align: center; }
 	anti-aliasing (MSAA), where each pixel involves multiple fragment colors rather than a single one.
 </p>
 <figure>
-	<img src="images/sa26_lines_overview.png" alt="Top: stochastic opacity masking from DiffSoup, where uniform random thresholds select a single visible fragment along each camera ray, together with the resulting score-function gradient estimator. Bottom left: our forward pass, which rasterizes line segments with Bresenham's algorithm on a 2x subpixel grid and applies image-space filtering to obtain the pixel color. Bottom right: our opacity gradient under MSAA, where the intractable joint probability over all fragments in the filter support is factorized under an independence assumption and evaluated at the pixel with the largest filter weight.">
+	<img src="images/sa26_lines_overview.png" style="width: 95%; margin: 0 auto;" alt="Top: stochastic opacity masking from DiffSoup, where uniform random thresholds select a single visible fragment along each camera ray, together with the resulting score-function gradient estimator. Bottom left: our forward pass, which rasterizes line segments with Bresenham's algorithm on a 2x subpixel grid and applies image-space filtering to obtain the pixel color. Bottom right: our opacity gradient under MSAA, where the intractable joint probability over all fragments in the filter support is factorized under an independence assumption and evaluated at the pixel with the largest filter weight.">
 </figure>
 
 <h3>Citation</h3>
