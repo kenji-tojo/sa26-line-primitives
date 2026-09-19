@@ -136,26 +136,6 @@ footer { margin-top: 2.5em; font-size: 0.85em; text-align: center; }
 	<a href="https://www.dropbox.com/scl/fo/az7yxi20tyt7ebz5twnwt/ALc-4hFqwXJCGKIOZ6ExaS0?rlkey=fky1dh9fnxg2uf6avuvry6ihy&st=y941442g&dl=0"><i class="fas fa-file-video"></i>Videos</a>
 </p>
 
-<h3>Abstract</h3>
-<p>
-	Faithfully capturing diverse real-world objects with fuzzy, anisotropic structures&mdash;such as hair, fur,
-	fibers, and textiles&mdash;for efficient real-time visualization remains challenging. Recent radiance field
-	reconstruction methods capture these structures from multi-view images using translucent volumetric primitives
-	such as 3D Gaussians rather than opaque low-dimensional primitives (e.g., triangles, line segments, and
-	polylines), thereby limiting compatibility with standard depth-tested rasterization, reflection modeling, and
-	physical simulation. We present an inverse rendering method for reconstructing fuzzy geometry using explicit
-	line segments, which are rasterized on a subpixel grid for anti-aliasing to reproduce a semi-transparent
-	appearance. While straightforward to render, optimizing numerous line primitives to match target images poses
-	a significant challenge. We address this by introducing a stochastic differentiable rasterizer for line
-	segments that produces informative gradients with respect to vertex positions, attributes, and discrete
-	connectivity.
-</p>
-
-<h3>Video</h3>
-<div class="video">
-	<iframe src="https://www.youtube.com/embed/BTQmIC_yEkU?si=-wJ7t6WTlTxdgf3U" title="Inverse Rendering for Modeling with Line Primitives" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</div>
-
 <section aria-labelledby="results-heading">
 	<h3 id="results-heading">Reconstruction Results</h3>
 	<p>Explore the reference photographs, our reconstructions, and the recovered geometry.</p>
@@ -182,6 +162,26 @@ footer { margin-top: 2.5em; font-size: 0.85em; text-align: center; }
 	<p class="result-status" id="result-status" role="status"></p>
 	<noscript><p>Enable JavaScript to switch scenes and move the comparison dividers.</p></noscript>
 </section>
+
+<h3>Abstract</h3>
+<p>
+	Faithfully capturing diverse real-world objects with fuzzy, anisotropic structures&mdash;such as hair, fur,
+	fibers, and textiles&mdash;for efficient real-time visualization remains challenging. Recent radiance field
+	reconstruction methods capture these structures from multi-view images using translucent volumetric primitives
+	such as 3D Gaussians rather than opaque low-dimensional primitives (e.g., triangles, line segments, and
+	polylines), thereby limiting compatibility with standard depth-tested rasterization, reflection modeling, and
+	physical simulation. We present an inverse rendering method for reconstructing fuzzy geometry using explicit
+	line segments, which are rasterized on a subpixel grid for anti-aliasing to reproduce a semi-transparent
+	appearance. While straightforward to render, optimizing numerous line primitives to match target images poses
+	a significant challenge. We address this by introducing a stochastic differentiable rasterizer for line
+	segments that produces informative gradients with respect to vertex positions, attributes, and discrete
+	connectivity.
+</p>
+
+<h3>Video</h3>
+<div class="video">
+	<iframe src="https://www.youtube.com/embed/BTQmIC_yEkU?si=-wJ7t6WTlTxdgf3U" title="Inverse Rendering for Modeling with Line Primitives" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
 
 <h3>Technical Overview</h3>
 <p>
