@@ -42,6 +42,47 @@ figcaption { font-style: italic; text-align: justify; margin-top: 0.6em; }
 .video iframe { width: 100%; height: 100%; border: 0; }
 pre { background: #f7f7f7; padding: 1em 1.25em; overflow-x: auto; font-size: 0.85em; line-height: 1.5em; }
 footer { margin-top: 2.5em; font-size: 0.85em; text-align: center; }
+.result-scenes { display: flex; flex-wrap: wrap; gap: 0.4em; margin: 0.8em 0; }
+.result-scenes button {
+	font: inherit; font-size: 0.8em; color: #666; background: #fff;
+	border: 1px solid #ddd; border-radius: 4px; padding: 0.25em 0.8em; cursor: pointer;
+}
+.result-scenes button[aria-pressed="true"] { color: #245e50; background: #e9f7f2; border-color: #4acaa8; }
+.result-scenes button:focus-visible { outline: 2px solid #777; outline-offset: 3px; }
+.result-divider:focus { outline: none; }
+.result-divider:focus-visible::after { outline: 2px solid #555; outline-offset: 3px; }
+.result-viewer {
+	--reference-end: 33.33%; --geometry-start: 66.67%;
+	position: relative; aspect-ratio: 1677 / 1116; background: #f7f7f7;
+	isolation: isolate;
+}
+.result-viewer img { position: absolute; inset: 0; height: 100%; object-fit: contain; }
+.result-reference { clip-path: inset(0 calc(100% - var(--reference-end)) 0 0); }
+.result-geometry { clip-path: inset(0 0 0 var(--geometry-start)); }
+.result-label {
+	position: absolute; top: 0.65em; transform: translateX(-50%); pointer-events: none;
+	padding: 0.1em 0.45em; border-radius: 3px; background: rgb(255 255 255 / 90%);
+	color: #444; font-size: clamp(9px, 1.7vw, 14px); line-height: 1.7; white-space: nowrap;
+}
+.result-label-reference { left: calc(var(--reference-end) / 2); }
+.result-label-reconstruction { left: calc((var(--reference-end) + var(--geometry-start)) / 2); }
+.result-label-geometry { left: calc((var(--geometry-start) + 100%) / 2); }
+.result-divider {
+	position: absolute; top: 0; bottom: 0; width: 44px; transform: translateX(-50%);
+	padding: 0; border: 0; background: transparent; cursor: ew-resize; touch-action: pan-y;
+}
+.result-divider::before {
+	content: ""; position: absolute; top: 0; bottom: 0; left: 21px; width: 2px;
+	background: #fff; box-shadow: 0 0 3px #555;
+}
+.result-divider::after {
+	content: "↔"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+	width: 32px; height: 32px; border-radius: 50%; background: #fff; color: #555;
+	box-shadow: 0 1px 5px #777; font: 20px/32px sans-serif; text-align: center;
+}
+.result-divider-reference { left: var(--reference-end); }
+.result-divider-geometry { left: var(--geometry-start); }
+.result-status { font-size: 0.8em; text-align: left; min-height: 1.75em; margin-top: 0.4em; }
 @media screen and (max-width: 1080px) {
 	body { font-size: 13pt; }
 }
@@ -115,6 +156,33 @@ footer { margin-top: 2.5em; font-size: 0.85em; text-align: center; }
 	<iframe src="https://www.youtube.com/embed/BTQmIC_yEkU?si=-wJ7t6WTlTxdgf3U" title="Inverse Rendering for Modeling with Line Primitives" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 
+<section aria-labelledby="results-heading">
+	<h3 id="results-heading">Reconstruction Results</h3>
+	<p>Explore the reference photographs, our reconstructions, and the recovered geometry.</p>
+	<div class="result-scenes" role="group" aria-label="Choose a scene">
+		<button type="button" data-scene="cactus1" aria-pressed="true">Cactus 1</button>
+		<button type="button" data-scene="cactus2" aria-pressed="false">Cactus 2</button>
+		<button type="button" data-scene="dinosaur" aria-pressed="false">Dinosaur</button>
+		<button type="button" data-scene="flowers" aria-pressed="false">Flowers</button>
+		<button type="button" data-scene="fur" aria-pressed="false">Fur</button>
+		<button type="button" data-scene="kiwi" aria-pressed="false">Kiwi</button>
+		<button type="button" data-scene="tawashi" aria-pressed="false">Tawashi</button>
+		<button type="button" data-scene="textiles" aria-pressed="false">Textiles</button>
+	</div>
+	<div class="result-viewer" id="result-viewer" role="group" aria-label="Cactus 1 image comparison">
+		<img class="result-reconstruction" src="images/capture_results/cactus1_P6A1794.png" alt="Cactus 1 reconstruction" loading="lazy" decoding="async" draggable="false">
+		<img class="result-reference" src="images/capture_results/cactus1_gt_P6A1794.png" alt="Cactus 1 reference photograph" loading="lazy" decoding="async" draggable="false">
+		<img class="result-geometry" src="images/capture_results/cactus1_view1_25.png" alt="Cactus 1 recovered geometry" loading="lazy" decoding="async" draggable="false">
+		<span class="result-label result-label-reference">Reference</span>
+		<span class="result-label result-label-reconstruction">Reconstruction</span>
+		<span class="result-label result-label-geometry">Geometry</span>
+		<div class="result-divider result-divider-reference" role="slider" tabindex="0" aria-label="Reference / reconstruction divider" aria-orientation="horizontal" aria-valuemin="0" aria-valuemax="60.67" aria-valuenow="33.33"></div>
+		<div class="result-divider result-divider-geometry" role="slider" tabindex="0" aria-label="Reconstruction / geometry divider" aria-orientation="horizontal" aria-valuemin="39.33" aria-valuemax="100" aria-valuenow="66.67"></div>
+	</div>
+	<p class="result-status" id="result-status" role="status"></p>
+	<noscript><p>Enable JavaScript to switch scenes and move the comparison dividers.</p></noscript>
+</section>
+
 <h3>Technical Overview</h3>
 <p>
 	We build on <em>stochastic opacity masking</em>, introduced in our previous work
@@ -155,5 +223,111 @@ footer { margin-top: 2.5em; font-size: 0.85em; text-align: center; }
 	<a href="https://kenji-tojo.github.io/">Kenji Tojo</a>
 </footer>
 
+<script>
+(() => {
+	// Photo IDs from images/views/<scene>_view<N>.json. No runtime JSON dependency.
+	const scenes = {
+		cactus1:  { photo: 'P6A1794', view: 1 },
+		cactus2:  { photo: 'P6A1046', view: 1 },
+		dinosaur: { photo: 'P6A1540', view: 2 },
+		flowers:  { photo: 'P6A1147', view: 1 },
+		fur:      { photo: 'P6A1649', view: 1 },
+		kiwi:     { photo: 'P6A1291', view: 1 },
+		tawashi:  { photo: 'P6A1406', view: 2 },
+		textiles: { photo: 'P6A1978', view: 1 }
+	};
+	const viewer = document.getElementById('result-viewer');
+	const status = document.getElementById('result-status');
+	const buttons = document.querySelectorAll('[data-scene]');
+	const dividers = [...viewer.querySelectorAll('.result-divider')];
+	const positions = [33.33, 66.67];
+	const minimumGap = 6; // Keep both drag handles reachable on narrow screens.
+
+	function moveDivider(index, value) {
+		positions[index] = Math.max(index === 0 ? 0 : positions[0] + minimumGap,
+			Math.min(index === 0 ? positions[1] - minimumGap : 100, value));
+		viewer.style.setProperty('--reference-end', positions[0] + '%');
+		viewer.style.setProperty('--geometry-start', positions[1] + '%');
+		dividers.forEach((divider, i) => {
+			divider.setAttribute('aria-valuenow', positions[i].toFixed(2));
+			divider.setAttribute('aria-valuemin', i === 0 ? 0 : (positions[0] + minimumGap).toFixed(2));
+			divider.setAttribute('aria-valuemax', i === 0 ? (positions[1] - minimumGap).toFixed(2) : 100);
+		});
+		// Hide labels when their image strip becomes too narrow to read.
+		const widths = [positions[0], positions[1] - positions[0], 100 - positions[1]];
+		['reference', 'reconstruction', 'geometry'].forEach((name, i) => {
+			viewer.querySelector('.result-label-' + name).hidden = widths[i] < 20;
+		});
+	}
+
+	dividers.forEach((divider, index) => {
+		let pointerId = null;
+		divider.addEventListener('pointerdown', event => {
+			if (!event.isPrimary || event.button !== 0) return;
+			pointerId = event.pointerId;
+			divider.setPointerCapture(pointerId);
+			divider.focus({ preventScroll: true });
+		});
+		divider.addEventListener('pointermove', event => {
+			if (event.pointerId !== pointerId) return;
+			const bounds = viewer.getBoundingClientRect();
+			moveDivider(index, (event.clientX - bounds.left) / bounds.width * 100);
+		});
+		divider.addEventListener('lostpointercapture', () => { pointerId = null; });
+		divider.addEventListener('keydown', event => {
+			let value = positions[index];
+			const step = event.shiftKey ? 10 : 1;
+			switch (event.key) {
+				case 'ArrowLeft': case 'ArrowDown': value -= step; break;
+				case 'ArrowRight': case 'ArrowUp': value += step; break;
+				case 'Home': value = 0; break;
+				case 'End': value = 100; break;
+				default: return;
+			}
+			event.preventDefault();
+			moveDivider(index, value);
+		});
+	});
+
+	let selection = 0;
+	buttons.forEach(button => button.addEventListener('click', async () => {
+		const request = ++selection;
+		const scene = button.dataset.scene;
+		const { photo, view } = scenes[scene];
+		const label = button.textContent;
+		const sources = {
+			reference: `${scene}_gt_${photo}.png`,
+			reconstruction: `${scene}_${photo}.png`,
+			geometry: `${scene}_view${view}_25.png`
+		};
+		status.textContent = `Loading ${label}…`;
+		viewer.setAttribute('aria-busy', 'true');
+		try {
+			// Decode all three before swapping, so rapid scene changes never mix views.
+			const loaded = await Promise.all(Object.entries(sources).map(async ([kind, file]) => {
+				const image = new Image();
+				image.src = 'images/capture_results/' + file;
+				await image.decode();
+				return { kind, image };
+			}));
+			if (request !== selection) return;
+			loaded.forEach(({ kind, image }) => {
+				const target = viewer.querySelector('.result-' + kind);
+				target.src = image.src;
+				target.alt = `${label} ${kind === 'reference' ? 'reference photograph' : kind === 'geometry' ? 'recovered geometry' : 'reconstruction'}`;
+			});
+			const reference = loaded.find(item => item.kind === 'reference').image;
+			viewer.style.aspectRatio = `${reference.naturalWidth} / ${reference.naturalHeight}`;
+			viewer.setAttribute('aria-label', `${label} image comparison`);
+			buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+			status.textContent = `${label} loaded.`;
+		} catch {
+			if (request === selection) status.textContent = `Could not load ${label}. Please try again.`;
+		} finally {
+			if (request === selection) viewer.removeAttribute('aria-busy');
+		}
+	}));
+})();
+</script>
 </body>
 </html>
